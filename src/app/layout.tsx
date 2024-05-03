@@ -1,8 +1,17 @@
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+});
+
+const playfairDisplayCaption = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-caption",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +24,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="h-full">
+      <body
+        className={cn(
+          montserrat.variable,
+          playfairDisplayCaption.variable,
+          "font-montserrat h-full"
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
