@@ -11,20 +11,19 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { forwardRef } from "react";
-import { AiOutlineShopping } from "react-icons/ai";
-import GithubIcon from "./icons/GithubIcon";
+import { HiOutlineShoppingBag, HiOutlineUser } from "react-icons/hi2";
 
 type Props = {};
 
 export default function Header({}: Props) {
   return (
-    <header className="sticky top-0 py-4">
-      <NavigationMenu className="max-w-full flex justify-center space-x-0">
-        <NavigationMenuList className="max-w-full space-x-0">
-          <NavigationMenuItem className="flex-1 w-64 text-center">
-            <h1 className="text-lg font-bold text-primary">SYNES</h1>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
+    <header className="z-10 sticky top-0 py-4 flex justify-between items-center w-full">
+      <div className="w-full text-center">
+        <h1 className="text-lg font-bold text-primary">SYNES</h1>
+      </div>
+      <NavigationMenu className="w-full">
+        <NavigationMenuList className="">
+          <NavigationMenuItem className="text-right">
             <NavigationMenuTrigger>Collection</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[550px] lg:grid-cols-[.75fr_1fr]">
@@ -37,7 +36,7 @@ export default function Header({}: Props) {
                       <div className="mb-2 mt-4 text-lg font-medium">
                         Nouveauté
                       </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
+                      <p className="text-sm leading-tight text-white/80">
                         Découvrez la dernière collection.
                       </p>
                     </a>
@@ -52,7 +51,7 @@ export default function Header({}: Props) {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="text-left">
             <NavigationMenuTrigger>Produits</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[550px] lg:grid-cols-[.75fr_1fr]">
@@ -71,30 +70,27 @@ export default function Header({}: Props) {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem className="flex-1 w-64 text-center">
-            <div className="space-x-3">
-              <Link
-                href="/panier"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "size-6 p-0"
-                )}
-              >
-                <AiOutlineShopping size={30} />
-              </Link>
-              <Link
-                href="/compte"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "size-6 p-0"
-                )}
-              >
-                <GithubIcon size={30} className="text-foreground" />
-              </Link>
-            </div>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
+      <div className="space-x-3 w-full text-center">
+        <Link href="/cart" className={cn(buttonVariants({ variant: "link" }))}>
+          <HiOutlineShoppingBag size={30} color="white" />
+        </Link>
+        <Link
+          href="/account"
+          className={cn(buttonVariants({ variant: "link" }))}
+        >
+          <HiOutlineUser size={30} color="white" />
+        </Link>
+        {/*
+        <Link
+          href="https://github.com/duncantilliole"
+          className={cn(buttonVariants({ variant: "link" }))}
+        >
+          <GithubIcon size={20} className="text-foreground" />
+        </Link>
+        */}
+      </div>
     </header>
   );
 }
@@ -115,7 +111,7 @@ const ListItem = forwardRef<
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="line-clamp-2 text-xs leading-snug text-muted-foreground text-white/80">
             {children}
           </p>
         </a>
