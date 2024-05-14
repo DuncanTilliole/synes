@@ -9,7 +9,7 @@ export default async function Home() {
       <Header session={session} darkMode={true} />
       <Video
         sourceProps={{
-          src: "/home_video.mp4",
+          src: "/home_video_test.mp4",
         }}
         autoPlay
         delayAutoPlay={2000} // Délai de 2 secondes avant la lecture automatique
