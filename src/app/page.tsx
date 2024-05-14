@@ -1,10 +1,12 @@
 import Header from "@/_components/Header";
 import Video from "@/_components/Video";
+import { auth } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
   return (
     <main>
-      <Header />
+      <Header session={session} darkMode={true} />
       <Video
         sourceProps={{
           src: "/home_video.mp4",

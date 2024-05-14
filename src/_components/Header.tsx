@@ -1,4 +1,5 @@
 "use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -9,22 +10,45 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { forwardRef } from "react";
 import { HiOutlineShoppingBag, HiOutlineUser } from "react-icons/hi2";
 
-type Props = {};
+type Props = {
+  session?: Session | null;
+  darkMode?: boolean;
+};
 
-export default function Header({}: Props) {
+export default function Header({ session, darkMode }: Props) {
+  const router = useRouter();
+
+  const onClickAccount = () => {
+    if (session) {
+      return router.push("/account");
+    } else signIn();
+  };
+
   return (
     <header className="z-10 sticky top-0 py-4 flex justify-between items-center w-full">
-      <div className="w-full text-center">
-        <h1 className="text-lg font-bold text-primary">SYNES</h1>
+      <div className="w-full item-center flex justify-center">
+        <Link href="/">
+          <Avatar>
+            <AvatarImage src="/logo.jpg" />
+            <AvatarFallback>Synes</AvatarFallback>
+          </Avatar>
+        </Link>
       </div>
-      <NavigationMenu className="w-full">
+      <NavigationMenu className="">
         <NavigationMenuList className="">
           <NavigationMenuItem className="text-right">
-            <NavigationMenuTrigger>Collection</NavigationMenuTrigger>
+            <NavigationMenuTrigger
+              className={!darkMode ? "text-blackysoft" : ""}
+            >
+              Collection
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[550px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
@@ -36,7 +60,7 @@ export default function Header({}: Props) {
                       <div className="mb-2 mt-4 text-lg font-medium">
                         Nouveauté
                       </div>
-                      <p className="text-sm leading-tight text-white/80">
+                      <p className="text-sm leading-tight">
                         Découvrez la dernière collection.
                       </p>
                     </a>
@@ -52,7 +76,11 @@ export default function Header({}: Props) {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem className="text-left">
-            <NavigationMenuTrigger>Produits</NavigationMenuTrigger>
+            <NavigationMenuTrigger
+              className={!darkMode ? "text-blackysoft" : ""}
+            >
+              Produits
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[550px] lg:grid-cols-[.75fr_1fr]">
                 <ListItem href="/docs" title="Hoodies">
@@ -74,14 +102,17 @@ export default function Header({}: Props) {
       </NavigationMenu>
       <div className="space-x-3 w-full text-center">
         <Link href="/cart" className={cn(buttonVariants({ variant: "link" }))}>
-          <HiOutlineShoppingBag size={30} color="white" />
+          <HiOutlineShoppingBag
+            size={30}
+            color={!darkMode ? "#232b2b" : "white"}
+          />
         </Link>
-        <Link
-          href="/account"
-          className={cn(buttonVariants({ variant: "link" }))}
+        <button
+          onClick={onClickAccount}
+          className="text-white hover:text-gray-300 focus:outline-none"
         >
-          <HiOutlineUser size={30} color="white" />
-        </Link>
+          <HiOutlineUser size={30} color={!darkMode ? "#232b2b" : "white"} />
+        </button>
         {/*
         <Link
           href="https://github.com/duncantilliole"
@@ -111,7 +142,7 @@ const ListItem = forwardRef<
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-xs leading-snug text-muted-foreground text-white/80">
+          <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
             {children}
           </p>
         </a>

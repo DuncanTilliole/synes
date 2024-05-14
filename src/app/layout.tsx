@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { NextAuthProvider } from "./providers";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export default function RootLayout({
           "font-montserrat h-full"
         )}
       >
-        {children}
+        <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
   );
