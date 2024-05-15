@@ -20,9 +20,10 @@ import { HiOutlineShoppingBag, HiOutlineUser } from "react-icons/hi2";
 type Props = {
   session?: Session | null;
   darkMode?: boolean;
+  withBackground?: boolean;
 };
 
-export default function Header({ session, darkMode }: Props) {
+export default function Header({ session, darkMode, withBackground }: Props) {
   const router = useRouter();
 
   const onClickAccount = () => {
@@ -32,7 +33,11 @@ export default function Header({ session, darkMode }: Props) {
   };
 
   return (
-    <header className="z-10 sticky top-0 py-4 flex justify-between items-center w-full">
+    <header
+      className={`z-10 sticky top-0 py-4 flex justify-between items-center w-full ${
+        withBackground ? "bg-white shadow-md" : ""
+      }`}
+    >
       <div className="w-full item-center flex justify-center">
         <Link href="/">
           <Avatar>

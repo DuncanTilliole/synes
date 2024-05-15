@@ -11,12 +11,14 @@ model User {
   id            String          @id @default(cuid())
   name          String?
   email         String          @unique
+  password      String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+  PasswordResetToken PasswordResetToken[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,4 +77,12 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([userId, credentialID])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expires   DateTime
+  user      User     @relation(fields: [userId], references: [id])
 }
