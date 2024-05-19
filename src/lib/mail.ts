@@ -5,16 +5,12 @@ export async function sendPasswordResetEmail(email: string, token: string) {
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT as string, 10),
     secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
   });
 
-  const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
+  const resetUrl = `http://localhost:3000/auth/resetpassword?token=${token}`;
 
   const mailOptions = {
-    from: '"Votre Application" <no-reply@example.com>',
+    from: '"Votre Application" <support@synes.com>',
     to: email,
     subject: "Réinitialisation de votre mot de passe",
     text: `Cliquez sur le lien pour réinitialiser votre mot de passe : ${resetUrl}`,

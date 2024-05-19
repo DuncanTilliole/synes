@@ -1,12 +1,7 @@
 import { sendPasswordResetEmail } from "@/lib/mail";
 import prisma from "@/lib/prisma";
-import crypto from "crypto";
+import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
-
-// Fonction utilitaire pour générer un token sécurisé
-function generateToken() {
-  return crypto.randomBytes(32).toString("hex");
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,7 +26,9 @@ export default async function handler(
       return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
 
-    const token = generateToken();
+    const token = jwt.sign({ email }, process.env.JWT_SECRET as string, {
+      expiresIn: "1h",
+    });
     const tokenExpires = new Date(Date.now() + 3600000); // 1 heure
 
     // Enregistrer le token et l'heure d'expiration dans la base de données
