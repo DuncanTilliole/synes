@@ -7,6 +7,8 @@ First, run the development server:
 ```bash
 pnpm install
 
+pnpm prisma migrate dev
+
 pnpm prisma generate
 
 pnpm dev
