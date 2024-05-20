@@ -10,6 +10,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import useScroll from "@/utils/hooks/useScroll";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -25,6 +26,8 @@ type Props = {
 
 export default function Header({ session, darkMode, withBackground }: Props) {
   const router = useRouter();
+  const scrollY = useScroll();
+  const isSticky = scrollY > 200;
 
   const onClickAccount = () => {
     if (session) {
@@ -34,9 +37,16 @@ export default function Header({ session, darkMode, withBackground }: Props) {
 
   return (
     <header
-      className={`z-10 sticky top-0 py-4 flex justify-between items-center w-full ${
-        withBackground ? "bg-white shadow-md" : ""
-      }`}
+      className={cn(
+        `py-4 flex justify-between items-center w-full ${
+          withBackground ? "bg-white shadow-md" : ""
+        }`,
+        {
+          "fixed top-0 z-20 bg-white shadow-md transform translate-y-0 transition-transform duration-400 ease-out":
+            isSticky,
+          "absolute z-10": !isSticky,
+        }
+      )}
     >
       <div className="w-full item-center flex justify-center">
         <Link href="/">
@@ -50,7 +60,7 @@ export default function Header({ session, darkMode, withBackground }: Props) {
         <NavigationMenuList className="">
           <NavigationMenuItem className="text-right">
             <NavigationMenuTrigger
-              className={!darkMode ? "text-blackysoft" : ""}
+              className={!darkMode || isSticky ? "text-blackysoft" : ""}
             >
               Collection
             </NavigationMenuTrigger>
@@ -82,7 +92,7 @@ export default function Header({ session, darkMode, withBackground }: Props) {
           </NavigationMenuItem>
           <NavigationMenuItem className="text-left">
             <NavigationMenuTrigger
-              className={!darkMode ? "text-blackysoft" : ""}
+              className={!darkMode || isSticky ? "text-blackysoft" : ""}
             >
               Produits
             </NavigationMenuTrigger>
@@ -109,14 +119,17 @@ export default function Header({ session, darkMode, withBackground }: Props) {
         <Link href="/cart" className={cn(buttonVariants({ variant: "link" }))}>
           <HiOutlineShoppingBag
             size={30}
-            color={!darkMode ? "#232b2b" : "white"}
+            color={!darkMode || isSticky ? "#232b2b" : "white"}
           />
         </Link>
         <button
           onClick={onClickAccount}
           className="text-white hover:text-gray-300 focus:outline-none"
         >
-          <HiOutlineUser size={30} color={!darkMode ? "#232b2b" : "white"} />
+          <HiOutlineUser
+            size={30}
+            color={!darkMode || isSticky ? "#232b2b" : "white"}
+          />
         </button>
         {/*
         <Link

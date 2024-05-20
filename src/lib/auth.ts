@@ -1,5 +1,5 @@
 import { verifyPassword } from "@/pages/api/user";
-import { ERROR_INTERNAL_SERVER, ErrorResponse } from "@/types/error";
+import { ERROR_INTERNAL_SERVER, ErrorResponse } from "@/utils/types/error";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";

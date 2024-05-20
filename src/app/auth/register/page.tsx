@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createUser, registerSchema } from "@/lib/auth";
-import { ErrorResponse } from "@/types/error";
+import { ErrorResponse } from "@/utils/types/error";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "next-auth";
 import Link from "next/link";

@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
+import { stripe } from "@/lib/stripe";
 import {
   ERROR_INTERNAL_SERVER,
   ERROR_USER_ALREADY_EXISTS,
-} from "@/types/error";
+} from "@/utils/types/error";
 import bcrypt from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -77,6 +78,17 @@ async function createUser(req: NextApiRequest, res: NextApiResponse) {
       include: {
         accounts: true,
         sessions: true,
+      },
+    });
+
+    const stripeCustomer = await stripe.customers.create({
+      email,
+    });
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        stripeCustomerId: stripeCustomer.id,
       },
     });
 

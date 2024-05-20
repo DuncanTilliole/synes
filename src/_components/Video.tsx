@@ -25,7 +25,7 @@ const Video = memo<VideoProps>(
     return (
       <video
         ref={videoRef}
-        className="fixed inset-0 w-full h-full object-cover z-0"
+        className="relative inset-0 w-full h-full object-cover z-0"
         autoPlay
         loop
         muted
