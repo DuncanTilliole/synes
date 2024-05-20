@@ -44,7 +44,7 @@ export default function Header({ session, darkMode, withBackground }: Props) {
         {
           "fixed top-0 z-20 bg-white shadow-md transform translate-y-0 transition-transform duration-400 ease-out":
             isSticky,
-          "absolute z-10": !isSticky,
+          "absolute z-20": !isSticky,
         }
       )}
     >

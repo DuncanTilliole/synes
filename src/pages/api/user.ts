@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/utils";
 import {
   ERROR_INTERNAL_SERVER,
   ERROR_USER_ALREADY_EXISTS,

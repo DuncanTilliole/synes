@@ -1,4 +1,5 @@
 import Header from "@/_components/Header";
+import ListProducts from "@/_components/ListProducts";
 import Video from "@/_components/Video";
 import { auth } from "@/lib/auth";
 
@@ -15,6 +16,7 @@ export default async function Home() {
         autoPlay
         delayAutoPlay={2000} // Délai de 2 secondes avant la lecture automatique
       />
+      <ListProducts />
     </main>
   );
 }
