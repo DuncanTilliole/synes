@@ -1,6 +1,5 @@
 "use client";
 import ProductCard from "@/_components/ProductCard";
-import { fetchStripeProducts } from "@/lib/stripe";
 import { useEffect, useState } from "react";
 import Stripe from "stripe";
 
@@ -10,7 +9,14 @@ export default function ListProducts() {
   >([]);
 
   useEffect(() => {
-    fetchStripeProducts().then(setProducts);
+    (async () => {
+      const response = await fetch(`/api/product`);
+
+      if (response.ok) {
+        const data = await response.json();
+        setProducts(data);
+      }
+    })();
   }, []);
 
   return (

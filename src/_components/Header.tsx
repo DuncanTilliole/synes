@@ -22,9 +22,15 @@ type Props = {
   session?: Session | null;
   darkMode?: boolean;
   withBackground?: boolean;
+  fixed?: boolean;
 };
 
-export default function Header({ session, darkMode, withBackground }: Props) {
+export default function Header({
+  session,
+  darkMode,
+  withBackground,
+  fixed,
+}: Props) {
   const router = useRouter();
   const scrollY = useScroll();
   const isSticky = scrollY > 200;
@@ -44,7 +50,7 @@ export default function Header({ session, darkMode, withBackground }: Props) {
         {
           "fixed top-0 z-20 bg-white shadow-md transform translate-y-0 transition-transform duration-400 ease-out":
             isSticky,
-          "absolute z-20": !isSticky,
+          "absolute z-20": !isSticky && !fixed,
         }
       )}
     >

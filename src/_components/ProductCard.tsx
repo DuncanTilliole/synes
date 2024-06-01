@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
 import { useState } from "react";
 import { Stripe } from "stripe";
+import ImagesProduct from "./ImagesProduct";
 
 type Props = {
   product: Stripe.Product & { price: Stripe.Price };
@@ -9,6 +9,8 @@ type Props = {
 
 function ProductCard({ product }: Props) {
   const [hovered, setHovered] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const originalPrice = product.metadata?.original_price
     ? parseInt(product.metadata.original_price, 10)
@@ -27,16 +29,7 @@ function ProductCard({ product }: Props) {
               -{discount.toFixed(0)}%
             </div>
           )}
-          <Image
-            src={!hovered ? product.images[0] : product.images[1]}
-            alt={product.name}
-            className="w-full h-auto object-cover"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            width={200}
-            height={200}
-            style={{ maxHeight: "625px" }}
-          />
+          <ImagesProduct images={product.images} name={product.name} />
         </a>
       </CardHeader>
       <CardContent className="text-center mt-2">
